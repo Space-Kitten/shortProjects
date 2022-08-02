@@ -1,0 +1,126 @@
+from datetime import date
+
+#Stores calculated values
+class Payroll:
+  def __init__(self,tax,hours,pay,total):
+    self.tax = tax
+    self.hours = hours
+    self.pay = pay
+    self.total = total
+    self.income = 0
+    self.paylist = []
+
+  def receipt(self):
+    total = str("{:.2f}".format(self.total))
+    self.paylist.append(total)
+    self.income = self.income + float(total)
+    return str("Your calculated total pay is: " + total)
+
+  def sethours(self,hours):
+    self.hours = hours
+
+  def calculate(self):
+    total= self.pay * self.hours
+    taxed = total * self.tax
+    self.total = total - taxed
+    return self.total
+
+  def calltotal(self):
+    return self.total
+
+  def callpay(self):
+    return self.pay
+
+  def callincome(self):
+    total = str("{:.2f}".format(self.income))
+    return total
+
+  def __repr__(self):
+    segments = ",".join(self.paylist)
+    return segments
+
+#Tax Calculator
+def calculateTax():
+  try:
+    pay = float(input("Hourly rate: "))
+    print("\nPlease enter the total pay for a pay period and the hours worked during that period.\n")
+    payroll1 = float(input("Pay period total: "))
+    hours1 = float(input("Total hours: "))
+
+    print("\n")
+
+    #Total calculations 
+    #(hour*pay - actual pay )/ hour*pay
+  
+    estimated = pay*hours1
+    actual = estimated - payroll1
+    actual = actual / estimated
+
+    print("\n\nCalculated Tax: {0:.4f}".format(actual))
+  except:
+    print("Something went wrong")
+    calculateTax()
+
+
+
+
+#Main body of program
+print("Welcome to payroll calculator!\n")
+person1 = Payroll(0,0,0,0)
+dec = int(input("If you want to calculate tax, please input 1: "))
+if dec == 1:
+  calculateTax()
+else:
+  print("User requested to not calculate tax.\n\n")
+
+print("\nBeginning payroll calculator.")
+while exit != 1:
+  print("To begin, please enter the amounts requested\n\n")
+  trigger = 0
+  try:
+    if person1.callpay() >0:
+      hours = float(input("Hours Worked: "))
+      person1.sethours(hours)
+      trigger = trigger + 1
+    else:
+      print("No previous data detected.")
+  except:
+    print("No previous data detected.")
+  if trigger == 0:
+    tax = float(input("Tax: "))
+    pay = float(input("Hourly Wage: "))
+    hours = float(input("Hours Worked: "))
+    person1 = Payroll(tax,hours,pay,0)
+  else:
+    print("Previous data detected")
+  print("\n\nCalculated val: ", person1.calculate())
+  print(person1.receipt())
+  print("\nEnd of calculations--------------------------------------------")
+
+  exit = int(input("\nDo you wish to continue? Press 0 for yes and 1 for no\n"))
+
+#Print function that prints income and payroll
+calcincome = str(input("\n\nType 'Print' to print calculated income\n"))
+if calcincome == "print" or "Print":
+  income = open("income.txt", "a")
+  today = date.today()
+  d1 = today.strftime("%d/%m/%Y")
+  income.write("\nPayroll calculated - ")
+  income.write(d1)
+  income.write("\n")
+  stringlist = list(repr(person1).split(","))
+  for i in range(len(stringlist)):
+    income.write("\nPeriod %d\r\n" % (i+1))
+    income.write("$ %s" % stringlist[i])
+    income.write("\n")
+  income.write("\n\nTotal calculated income - $")
+  income.write(person1.callincome())
+  income.write("\nEnd of Payroll\n\n\n ")
+  income.write("---------------------")
+  income.close()
+  print("View income.txt for printed information.")
+else:
+  print("___________\n")
+
+print("\n\nThank you for using payroll calculator!")
+print("End of program")
