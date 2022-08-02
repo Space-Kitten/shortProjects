@@ -1,6 +1,4 @@
 # shortProjects
-a few short and sweet projects.
-
 Description: Payroll Calculator
 An application that can print and calculate total payroll and estimated pay based on inputted values such as estimated tax (a tool to estimate this value is also included)
 and hourly pay. The application will prompt the user to first confirm if they would like to calculate their tax, if yes then it will walk through calculating estimated tax.
