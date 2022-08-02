@@ -101,7 +101,7 @@ while exit != 1:
 
 #Print function that prints income and payroll
 calcincome = str(input("\n\nType 'Print' to print calculated income\n"))
-if calcincome == "print" or "Print":
+if calcincome == ("print" or "Print"):
   income = open("income.txt", "a")
   today = date.today()
   d1 = today.strftime("%d/%m/%Y")
@@ -121,6 +121,7 @@ if calcincome == "print" or "Print":
   print("View income.txt for printed information.")
 else:
   print("___________\n")
+  print("Declined print")
 
 print("\n\nThank you for using payroll calculator!")
 print("End of program")
